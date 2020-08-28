@@ -14,3 +14,12 @@ Then the api will do a search for images that match that mood and display them
 
 once the user selects a mood return 10? images that go into a carousel and at the end there is an option to get more photos, or change the mood input
 
+Set up revolving gradient colors for background.
+
+Link Start button to show second page with options and buttons for either moods, colors, gifs, etc.
+
+Create carousel to show results
+
+Add a favorite button to link to localStorage
+
+*** extra feature *** create functionality of searching for images similar to one particular image selected.
