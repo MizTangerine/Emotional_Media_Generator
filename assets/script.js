@@ -49,7 +49,7 @@ $(document).ready(function () {
             console.log(responseP)
             for (let i = 0; i < limit; i++) {
                 console.log('Image: ' + i);
-                $('#img' + i).attr('src', responseP.photos[i].src.medium);
+                $('#img' + i).attr('src', responseP.photos[i].src.large);
             }
         })
     }
@@ -58,3 +58,7 @@ $(document).ready(function () {
     pexelSearch()
 
 });
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
