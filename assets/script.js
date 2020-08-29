@@ -8,10 +8,10 @@ $(document).ready(function () {
 
     });
 
-    let page = (Math.floor(Math.random() * 10)) + 1
+    let page = (Math.floor(Math.random() * 7)) + 1
     console.log(page)
     let limit = 10;
-    let mood = 'scary';
+    let mood = 'light';
 
     //function that returns 10 random gifs based on user input of mood
     function returnRandomGIFS() {
@@ -49,7 +49,8 @@ $(document).ready(function () {
             console.log(responseP)
             for (let i = 0; i < limit; i++) {
                 console.log('Image: ' + i);
-                $('#img' + i).attr('src', responseP.photos[i].src.large);
+                $('#img' + i).attr('src', responseP.photos[i].src.medium).attr('alt', mood + [i]).attr('label', 'Photo by ' + responseP.photos[i].photographer + ' on Pexels');
+
             }
         })
     }
@@ -58,7 +59,3 @@ $(document).ready(function () {
     pexelSearch()
 
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> master
