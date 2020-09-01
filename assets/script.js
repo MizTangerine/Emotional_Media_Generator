@@ -46,9 +46,10 @@ $(document).ready(function () {
             console.log(responseP)
             for (let i = 0; i < limit; i++) {
 
-              let cardEl = $('<div>').attr({ 'class': 'card' })
+                let cardEl = $('<div>').attr({ 'class': 'card' })
                 let cardImgEl = $('<div>').attr({ 'class': 'card-image' })
                 let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' })
+                let btnEl = $('<button>').attr({ 'class': 'img-Btn' })
                 let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': responseP.photos[i].src.medium, alt: mood + [i], 'label': 'Photo by ' + responseP.photos[i].photographer + ' on Pexels' })
                 let cardContEl = $('<div>').attr({ 'class': 'card-content' })
                 let itemTitleEl = $('<div>').attr({ 'class': 'item__title' })
@@ -57,13 +58,15 @@ $(document).ready(function () {
                 $('#slider').append(cardEl)
                 cardEl.append(cardImgEl)
                 cardImgEl.append(figureEl)
-                figureEl.append(imgEl)
+                figureEl.append(btnEl)
+                btnEl.append(imgEl)
 
                 cardEl.append(cardContEl)
                 cardContEl.append(itemTitleEl)
                 itemTitleEl.append(titleEl)
 
             }
+            pexelLocalStorage()
         })
     }
 
@@ -77,20 +80,23 @@ $(document).ready(function () {
     });
 
     //click listener will save current image url to local storage
-    let savedImageHistory = [];
-    $('.img-Btn').on('click', function(event) {
-        newImageHistory = {'URL': event.target.attributes[0].value};
-        console.log(newImageHistory);
-        savedImageHistory.unshift(newImageHistory);
-        console.log(savedImageHistory);
-        localStorage.setItem('pictureHistory', JSON.stringify(savedImageHistory));
-        console.log(localStorage.getItem('pictureHistory'));
-    });
+    function pexelLocalStorage() {
+        let savedImageHistory = [];
+        $('.img-Btn').on('click', function (event) {
+            console.log('something')
+            newImageHistory = { 'URL': event.target.attributes[1].value };
+            console.log(newImageHistory);
+            savedImageHistory.unshift(newImageHistory);
+            console.log(savedImageHistory);
+            localStorage.setItem('pictureHistory', JSON.stringify(savedImageHistory));
+            console.log(localStorage.getItem('pictureHistory'));
+        });
+    }
 
     //click listener will save current gif url local storage
     let savedGifHistory = [];
-    $('.gif-btn').on('click', function(event) {
-        newGifHistory = {'URL': event.target.attributes[0].value};
+    $('.gif-btn').on('click', function (event) {
+        newGifHistory = { 'URL': event.target.attributes[0].value };
         console.log(newGifHistory);
         savedGifHistory.unshift(newGifHistory);
         console.log(savedGifHistory);
