@@ -11,7 +11,7 @@ $(document).ready(function () {
     let page = (Math.floor(Math.random() * 10)) + 1
     console.log(page)
     let limit = 10;
-    let mood = 'scary';
+    let mood = 'fun';
 
     //function that returns 10 random gifs based on user input of mood
     function returnRandomGIFS() {
@@ -58,7 +58,3 @@ $(document).ready(function () {
     pexelSearch()
 
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> master
