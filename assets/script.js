@@ -27,23 +27,44 @@ $(document).ready(function () {
             console.log(response)
             for (let i = 0; i < limit; i++) {
                 // $('#imgGif' + i).attr('src', response.data[i].images.downsized_medium.url);
-                let cardEl = $('<div>').attr({ 'class': 'card' });
-                let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
-                let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
-                let btnEl = $('<button>').attr({ 'class': 'gif-btn' });
-                let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': response.data[i].images.downsized_medium.url, 'alt': response.data[i].title });
-                let cardContEl = $('<div>').attr({ 'class': 'card-content' });
-                let itemTitleEl = $('<div>').attr({ 'class': 'item__title' });
-                let titleEl = $('<a>').attr({ 'href': response.data[i].embed_url, 'target': '_blank ' }).text(response.data[i].title + ' Powered By GIPHY');
+                let cardEl = $('<div>').attr({
+                    'class': 'card'
+                });
+                let cardButtonEl = $('<button>').attr({
+                    'class': 'gif-btn far fa-heart',
+                });
+                let cardImgEl = $('<div>').attr({
+                    'class': 'card-image'
+                });
+                let figureEl = $('<figure>').attr({
+                    'class': 'image is-16by9 is-covered'
+                });
+                let imgEl = $('<img>').attr({
+                    'id': 'img' + [i],
+                    'src': response.data[i].images.downsized_medium.url,
+                    'alt': response.data[i].title
+                });
+                let cardContEl = $('<div>').attr({
+                    'class': 'card-content'
+                });
+                let itemTitleEl = $('<div>').attr({
+                    'class': 'item__title'
+                });
+                let titleEl = $('<a>').attr({
+                    'href': response.data[i].embed_url,
+                    'target': '_blank '
+                }).text(response.data[i].title + ' Powered By GIPHY');
 
                 $('.giphy').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
-                figureEl.append(btnEl);
-                btnEl.append(imgEl);
+                figureEl.append(imgEl);
                 cardEl.append(cardContEl);
+                cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
+
+
             }
             gifLocalStorage()
         });
@@ -59,29 +80,50 @@ $(document).ready(function () {
         $.ajax({
             url: queryURLp,
             method: 'GET',
-            headers: { "Authorization": api_key },
+            headers: {
+                "Authorization": api_key
+            },
         }).then(function (responseP) {
             // console.log(responseP);
             for (let i = 0; i < limit; i++) {
 
-                let cardEl = $('<div>').attr({ 'class': 'card' });
-                let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
-                let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
-                let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
-                let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': responseP.photos[i].src.medium, 'alt': mood + [i], 'label': 'Photo by ' + responseP.photos[i].photographer + ' on Pexels' });
-                let cardContEl = $('<div>').attr({ 'class': 'card-content' });
-                let itemTitleEl = $('<div>').attr({ 'class': 'item__title' });
-                let titleEl = $('<a>').attr({ 'href': responseP.photos[i].photographer_url, 'target': '_blank ' }).text('Photo by ' + responseP.photos[i].photographer + ' on Pexels');
+                let cardEl = $('<div>').attr({
+                    'class': 'card'
+                });
+                let cardButtonEl = $('<button>').attr({
+                    'class': 'img-Btn far fa-heart'
+                });
+                let cardImgEl = $('<div>').attr({
+                    'class': 'card-image'
+                });
+                let figureEl = $('<figure>').attr({
+                    'class': 'image is-16by9 is-covered'
+                });
+                let imgEl = $('<img>').attr({
+                    'id': 'img' + [i],
+                    'src': responseP.photos[i].src.medium,
+                    'alt': mood + [i],
+                    'label': 'Photo by ' + responseP.photos[i].photographer + ' on Pexels'
+                });
+                let cardContEl = $('<div>').attr({
+                    'class': 'card-content'
+                });
+                let itemTitleEl = $('<div>').attr({
+                    'class': 'item__title'
+                });
+                let titleEl = $('<a>').attr({
+                    'href': responseP.photos[i].photographer_url,
+                    'target': '_blank '
+                }).text('Photo by ' + responseP.photos[i].photographer + ' on Pexels');
 
                 $('.pexels').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
-                figureEl.append(btnEl);
-                btnEl.append(imgEl);
+                figureEl.append(imgEl);
                 cardEl.append(cardContEl);
+                cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
-
             }
             pexelLocalStorage()
         })
@@ -101,12 +143,17 @@ $(document).ready(function () {
         let savedImageHistory = [];
         $('.img-Btn').on('click', function (event) {
             console.log('something')
-            newImageHistory = { 'URL': event.target.attributes[1].value };
+            newImageHistory = {
+                'URL': event.target.attributes[1].value
+            };
             console.log(newImageHistory);
             savedImageHistory.unshift(newImageHistory);
             console.log(savedImageHistory);
             localStorage.setItem('pictureHistory', JSON.stringify(savedImageHistory));
             console.log(localStorage.getItem('pictureHistory'));
+            // $(cardButtonEl) = $('<button>').attr({
+            //     'class': 'img-Btn fas fa-heart'
+            // });
         });
     }
 
@@ -114,12 +161,17 @@ $(document).ready(function () {
     function gifLocalStorage() {
         let savedGifHistory = [];
         $('.gif-btn').on('click', function (event) {
-            newGifHistory = { 'URL': event.target.attributes[1].value };
+            newGifHistory = {
+                'URL': event.target.attributes[1].value
+            };
             console.log(newGifHistory);
             savedGifHistory.unshift(newGifHistory);
             console.log(savedGifHistory);
             localStorage.setItem('gifHistory', JSON.stringify(savedGifHistory));
             console.log(localStorage.getItem('gifHistory'));
+            // $(cardButtonEl) = $('<button>').attr({
+            //     'class': 'gif-btn fas fa-heart'
+            // });
         });
     }
 
