@@ -124,7 +124,7 @@ $(document).ready(function () {
 
         let page = (Math.floor(Math.random() * 7)) + 1;
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
-        const queryURLp = 'https://api.pexels.com/v1/search?client=' + api_key + '&query=' + mood + '&per_page=' + limit + '&page=' + page;
+        const queryURLp = 'https://api.pexels.com/v1/search?client=' + api_key + '&query=' + mood + '&per_page=' + 80 + '&page=' + page;
 
         $.ajax({
             url: queryURLp,
@@ -133,9 +133,19 @@ $(document).ready(function () {
                 "Authorization": api_key
             },
         }).then(function (responseP) {
-            // console.log(mood, responseP);
+            console.log(mood, responseP);
+            let photoIdSeen = {}
             for (let i = 0; i < limit; i++) {
+                // console.log(responseP.photos[i].photographer_id)
+                // create random index from size of response, so we can grab a random image 
 
+                if ((responseP.photos[i].photographer_id in photoIdSeen)) {
+                    photoIdSeen[responseP.photos[i].photographer_id] = photoIdSeen[responseP.photos[i].photographer_id]++
+                    // i--
+                    continue
+                }
+                photoIdSeen[responseP.photos[i].photographer_id] = 0
+                console.log(photoIdSeen)
                 let cardEl = $('<div>').attr({
                     'class': 'card'
                 });
@@ -220,7 +230,8 @@ $(document).ready(function () {
 
     //on button click set mood to button value
     $('#photo-btn').on('click', function (event) {
-        pexelSearch(event.target.textContent);
+        console.dir(event.target.dataset.search)
+        pexelSearch(event.target.dataset.search);
         $('.pexels').empty();
         $('.giphy').empty();
         $('#startBtn').empty();
@@ -238,6 +249,7 @@ $(document).ready(function () {
         pexelCurated();
         $('.pexels').empty();
         $('.giphy').empty();
+        $('#startBtn').empty();
     });
 
     //click listener will save current image url to local storage
@@ -267,7 +279,7 @@ $(document).ready(function () {
     }
 
     //display all favorites when start button is clicked
-    $('#startBtn').on('click', function() {
+    $('#startBtn').on('click', function () {
         $('.pexels').empty();
         $('.giphy').empty();
         $('#startBtn').empty();
@@ -285,7 +297,7 @@ $(document).ready(function () {
             let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
             let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
             let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
-            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i});
+            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i });
 
             $('.pexels').append(cardEl);
             cardEl.append(cardImgEl);
