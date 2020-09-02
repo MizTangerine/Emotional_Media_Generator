@@ -15,7 +15,7 @@
   <nav class="navbar is-black" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a href="#" class="is-large navbar-item is-white">
+        <a id="emg-home" href="#" class="is-large navbar-item is-white">
           <h1 class="is-size-4 is-white">EMG</h1>
         </a>
         <div class="navbar-burger burger" data-target="navmenu" aria-label="menu">
@@ -26,100 +26,92 @@
       </div>
       <div class="navbar-menu" id="navmenu">
         <div class="navbar-end">
-          <a href="#" class="navbar-item">GIF</a>
-          <a href="#" class="navbar-item">PHOTOS</a>
-          <a href="#" class="navbar-item">RANDOM</a>
+          <a id="nav-gif" href="#" class="navbar-item">GIF</a>
+          <a id="nav-photos" href="#" class="navbar-item">PHOTOS</a>
+          <a id="nav-random" href="#" class="navbar-item">RANDOM</a>
         </div>
       </div>
     </div>
   </nav>
 
   <!-- Hero with link to start -->
-  <section class="hero is-light is-small">
+  <section class="hero is-light is-fullheight">
     <div class="hero-body">
-      <div class="container has-text-right">
+      <div id="hero-text" class="container has-text-right">
         <h1 class="title">Emotional Media Generator</h1>
         <h2 class="subtitle">Generate media based off emotion</h2>
-        <button class="button is-black">Start</button>
+        <button id="start-btn" class="button is-black">Start</button>
       </div>
+      <!-- this is for the question notification -->
+        <div class="block">
+          <div id="photo-question" class="columns is-centered">
+            <div class="column is-10">
+              <div class="notification ">
+                <div class="content is-large is is-centered">
+                  Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some
+                  <strong>Beautiful</strong> pictures based off of your mood, we have a list of different options below in the
+                  form of buttons. You may click on any of them or check out our "gifs", and "random" options as well.
+                 </div>
+                <div id="photo-btn" class="buttons is-centered">
+                  <button class="button is-black">Happy</button>
+                  <button class="button is-black">Sad</button>
+                  <button class="button is-black">Angry</button>
+                  <button class="button is-black">Excited</button>
+                  <button class="button is-black">Funny</button>
+                  <button class="button is-black">Inspired</button>
+                  <button class="button is-black">Bored</button>
+                  <button class="button is-black">Annoyed</button>
+                  <button class="button is-black">Scary</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <!-- this is for the giphy notification -->
+        <div class="block">
+          <div id = "giphy-question" class="columns is-centered">
+            <div class="column is-10">
+              <div class="notification is-light">
+                <div class="content is-large is is-centered">
+                  Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some
+                  <strong>Nice</strong> gifs based off of your mood, we have a list of different options below in the form of
+                  buttons. You may click on any of them or check out our "pictures", and "random" options as well.
+                </div>
+                <div id="gif-btn" class="buttons is-centered">
+                  <button class="button is-black">Happy</button>
+                  <button class="button is-black">Sad</button>
+                  <button class="button is-black">Angry</button>
+                  <button class="button is-black">Excited</button>
+                  <button class="button is-black">Funny</button>
+                  <button class="button is-black">Disappointed</button>
+                  <button class="button is-black">Meh</button>
+                  <button class="button is-black">Annoyed</button>
+                  <button class="button is-black">Scary</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- this is for the random notification -->
+          <div class="block">
+            <div id="random-question" class="columns is-centered">
+              <div class="column is-10">
+                <div class="notification is-light">
+                  <div class="content is-large is is-centered">
+                    Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some gifs and
+                    photos. Hit the generate button to see some! (All photos and Gifs generated randomly) Hit the Pictures or Gif
+                    options to find specidic ones based off your mood.
+                  </div>
+                  <div class="buttons is-centered">
+                    <button class="button is-black">Generate</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
   </section>
-
-
-
-
-  <!-- Picture buttton -->
-  <br>
-  <div class="columns is-centered">
-    <div class="column is-10">
-      <div class="notification ">
-        <div class="content is-large is is-centered">
-          Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some
-          <strong>Beautiful</strong> pictures based off of your mood, we have a list of different options below in the
-          form of buttons. You may click on any of them or check out our "gifs", and "random" options as well.
-        </div>
-        <div id="photo-btn" class="buttons is-centered">
-          <button class="button is-black">Happy</button>
-          <button class="button is-black">Sad</button>
-          <button class="button is-black">Angry</button>
-          <button class="button is-black">Excited</button>
-          <button class="button is-black">Funny</button>
-          <button class="button is-black">Inspired</button>
-          <button class="button is-black">Bored</button>
-          <button class="button is-black">Annoyed</button>
-          <button class="button is-black">Scary</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-  <!-- Gif button -->
-  <div class="columns is-centered">
-    <div class="column is-10">
-      <div class="notification ">
-        <div class="content is-large is is-centered">
-          Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some
-          <strong>Nice</strong> gifs based off of your mood, we have a list of different options below in the form of
-          buttons. You may click on any of them or check out our "pictures", and "random" options as well.
-        </div>
-        <div id="gif-btn" class="buttons is-centered">
-          <button class="button is-black">Happy</button>
-          <button class="button is-black">Sad</button>
-          <button class="button is-black">Angry</button>
-          <button class="button is-black">Excited</button>
-          <button class="button is-black">Funny</button>
-          <button class="button is-black">Disappointed</button>
-          <button class="button is-black">Meh</button>
-          <button class="button is-black">Annoyed</button>
-          <button class="button is-black">Scary</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- random button -->
-  <div class="columns is-centered">
-    <div class="column is-10">
-      <div class="notification ">
-        <div class="content is-large is is-centered">
-          Welcome to Emotional Media Generator ("EMG" for short). We want to show <strong>YOU</strong> some gifs and
-          photos. Hit the generate button to see some! (All photos and Gifs generated randomly) Hit the Pictures or Gif
-          options to find specidic ones based off your mood.
-        </div>
-        <div class="buttons is-centered">
-          <button class="button is-black">Generate</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- display pictures -->
-  <!-- image was converted to button to test the local storage functionality
-       Once we get the actual buttons in here we can update the links -->
 
   <section class="section">
     <div class="container is-clipped">
