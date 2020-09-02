@@ -90,35 +90,39 @@ $(document).ready(function () {
     //on button click set mood to button value
     $('#photo-btn').on('click', function (event) {
         pexelSearch(event.target.textContent);
+        $('.pexels').empty();
+        $('.giphy').empty();
     });
 
     $('#gif-btn').on('click', function (event) {
         gifySearch(event.target.textContent);
+        $('.pexels').empty();
+        $('.giphy').empty();
     });
 
     //click listener will save current image url to local storage
+    let favorites = [];
+    
     function pexelLocalStorage() {
-        let savedImageHistory = [];
         $('.img-Btn').on('click', function (event) {
             console.log('something')
             newImageHistory = { 'URL': event.target.attributes[1].value };
             console.log(newImageHistory);
-            savedImageHistory.unshift(newImageHistory);
-            console.log(savedImageHistory);
-            localStorage.setItem('pictureHistory', JSON.stringify(savedImageHistory));
+            favorites.unshift(newImageHistory);
+            console.log(favorites);
+            localStorage.setItem('pictureHistory', JSON.stringify(favorites));
             console.log(localStorage.getItem('pictureHistory'));
         });
     }
 
     //click listener will save current gif url local storage
     function gifLocalStorage() {
-        let savedGifHistory = [];
         $('.gif-btn').on('click', function (event) {
             newGifHistory = { 'URL': event.target.attributes[1].value };
             console.log(newGifHistory);
-            savedGifHistory.unshift(newGifHistory);
-            console.log(savedGifHistory);
-            localStorage.setItem('gifHistory', JSON.stringify(savedGifHistory));
+            favorites.unshift(newGifHistory);
+            console.log(favorites);
+            localStorage.setItem('gifHistory', JSON.stringify(favorites));
             console.log(localStorage.getItem('gifHistory'));
         });
     }
