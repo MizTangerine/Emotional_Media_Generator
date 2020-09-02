@@ -26,3 +26,19 @@ body {
     background-position: 100%;
   }
 }
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 650px;
+  margin: 5px;
+  float: left;
+}
+.gif-btn {
+  float: right;
+  size: 10px;
+}
+.img-Btn {
+  float: right;
+  size: 10px;
+}
