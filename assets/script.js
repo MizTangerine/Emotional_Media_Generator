@@ -1,6 +1,56 @@
 // collapsable burger when website is mobile
 $(document).ready(function () {
 
+    //this is for the hide/show
+    const photoQuestion = $("#photo-question");
+    const giphyQuestion = $("#giphy-question");
+    const randomQuestion = $("#random-question");
+
+    photoQuestion.hide();
+    giphyQuestion.hide();
+    randomQuestion.hide();
+
+    const emgHome = $("#emg-home");
+    const heroText =$("#hero-text");
+
+    $("#start-btn").on("click", function(){
+        heroText.hide();
+        photoQuestion.show();
+    });
+
+    $("#nav-photos").on("click", function(){
+        heroText.hide();
+        giphyQuestion.hide();
+        randomQuestion.hide();
+        photoQuestion.show();
+    });
+
+    $("#nav-gif").on("click", function(){
+        heroText.hide();
+        giphyQuestion.show();
+        randomQuestion.hide();
+        photoQuestion.hide();
+    });
+
+    $("#nav-random").on("click", function(){
+        heroText.hide();
+        giphyQuestion.hide();
+        randomQuestion.show();
+        photoQuestion.hide();
+    });
+    
+    emgHome.on("click", function(){
+        heroText.show();
+        giphyQuestion.hide();
+        randomQuestion.hide();
+        photoQuestion.hide();
+    });
+    //hide show ends here
+
+
+
+
+
     let limit = 10;
 
     $(".navbar-burger").click(function () {
