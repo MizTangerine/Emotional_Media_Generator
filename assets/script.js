@@ -92,26 +92,27 @@ $(document).ready(function () {
         pexelSearch(event.target.textContent);
         $('.pexels').empty();
         $('.giphy').empty();
+        $('#startBtn').empty();
     });
 
     $('#gif-btn').on('click', function (event) {
         gifySearch(event.target.textContent);
         $('.pexels').empty();
         $('.giphy').empty();
+        $('#startBtn').empty();
     });
 
     //click listener will save current image url to local storage
     let favorites = [];
-    
+
     function pexelLocalStorage() {
         $('.img-Btn').on('click', function (event) {
-            console.log('something')
             newImageHistory = { 'URL': event.target.attributes[1].value };
-            console.log(newImageHistory);
             favorites.unshift(newImageHistory);
-            console.log(favorites);
-            localStorage.setItem('pictureHistory', JSON.stringify(favorites));
-            console.log(localStorage.getItem('pictureHistory'));
+            if (favorites.length > 10) {
+                favorites.pop();
+            };
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
 
@@ -119,12 +120,40 @@ $(document).ready(function () {
     function gifLocalStorage() {
         $('.gif-btn').on('click', function (event) {
             newGifHistory = { 'URL': event.target.attributes[1].value };
-            console.log(newGifHistory);
             favorites.unshift(newGifHistory);
-            console.log(favorites);
-            localStorage.setItem('gifHistory', JSON.stringify(favorites));
-            console.log(localStorage.getItem('gifHistory'));
+            if (favorites.length > 10) {
+                favorites.pop();
+            };
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
 
+    //display all favorites when start button is clicked
+    $('#startBtn').on('click', function() {
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('#startBtn').empty();
+        displayFavorites();
+    });
+
+    //create new cards and display image for each url in favorites function
+    function displayFavorites() {
+        console.log(favorites);
+        favorites = JSON.parse(localStorage.getItem('favorites'));
+        console.log(favorites);
+        for (let i = 0; i < favorites.length; i++) {
+            console.log(favorites[i].URL);
+            let cardEl = $('<div>').attr({ 'class': 'card' });
+            let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
+            let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
+            let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
+            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i});
+
+            $('.pexels').append(cardEl);
+            cardEl.append(cardImgEl);
+            cardImgEl.append(figureEl);
+            figureEl.append(btnEl);
+            btnEl.append(imgEl);
+        };
+    }
 });
