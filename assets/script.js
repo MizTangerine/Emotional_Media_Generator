@@ -1,75 +1,93 @@
 // collapsable burger when website is mobile
 $(document).ready(function () {
-
+    
     //this is for the hide/show
     const photoQuestion = $("#photo-question");
     const giphyQuestion = $("#giphy-question");
     const randomQuestion = $("#random-question");
     const favoritesDisplay = $("#favorites-display");
-
+    
     photoQuestion.hide();
     giphyQuestion.hide();
     randomQuestion.hide();
     favoritesDisplay.hide();
-
+    
     const emgHome = $("#emg-home");
     const heroText = $("#hero-text");
-
-    $("#start-btn").on("click", function () {
-        heroText.hide();
-        photoQuestion.show();
-    });
-
-    $("#nav-photos,#photos-btn").on("click", function () {
+    
+    // $("#start-btn").on("click", function () {
+    //     heroText.hide();
+    //     photoQuestion.show();
+    // });
+    
+    $("#nav-photos,#hero-photos-btn").on("click", function () {
         heroText.hide();
         giphyQuestion.hide();
         randomQuestion.hide();
         photoQuestion.show();
         favoritesDisplay.hide();
+        clearCards();
     });
-
-    $("#nav-gif, #gif-btn").on("click", function () {
+    
+    $("#nav-gif, #hero-gif-btn").on("click", function () {
         heroText.hide();
         giphyQuestion.show();
         randomQuestion.hide();
         photoQuestion.hide();
         favoritesDisplay.hide();
+        clearCards();
     });
-
-    $("#nav-random, #random-btn").on("click", function () {
+    
+    $("#nav-random, #hero-random-btn").on("click", function () {
         heroText.hide();
         giphyQuestion.hide();
         randomQuestion.show();
         photoQuestion.hide();
         favoritesDisplay.hide();
+        clearCards();
     });
-
+    
     $("#nav-favorites").on("click", function () {
+        console.log('hit favorites');
         heroText.hide();
         giphyQuestion.hide();
         randomQuestion.hide();
         photoQuestion.hide();
         favoritesDisplay.show();
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('#startBtn').empty();
-        $('.random').empty();
+        clearCards();
         displayFavorites();
     });
-
+    
     emgHome.on("click", function () {
+        console.log('hit home');
         heroText.show();
         giphyQuestion.hide();
         randomQuestion.hide();
         photoQuestion.hide();
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('#startBtn').empty();
-        $('.random').empty();
-        $('.favorites').empty();
+        favoritesDisplay.hide();
+        clearCards();
     });
     //hide show ends here
 
+    //on button click set mood to button value
+    $('#photo-btn').on('click', function (event) {
+        console.log('hit photos');
+        clearCards();
+        pexelSearch(event.target.dataset.name);
+    });
+    
+    $('#gif-btn').on('click', function (event) {
+        console.log('hit gifs');
+        clearCards();
+        giphySearch(event.target.textContent);
+    });
+    
+    $('#random-btn').on('click', function () {
+        console.log('hit random');
+        clearCards();
+        pexelCurated();
+    });
+    
     let limit = 10;
 
     $(".navbar-burger").click(function () {
@@ -239,34 +257,6 @@ $(document).ready(function () {
         })
     }
 
-    //on button click set mood to button value
-    $('#photo-btn').on('click', function (event) {
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('.random').empty();
-        $('.favorites').empty();
-        $('#startBtn').empty();
-        pexelSearch(event.target.dataset.name);
-    });
-
-    $('#gif-btn').on('click', function (event) {
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('.random').empty();
-        $('.favorites').empty();
-        $('#startBtn').empty();
-        giphySearch(event.target.textContent);
-    });
-
-    $('#random-btn').on('click', function () {
-        console.log('why')
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('.random').empty();
-        $('.favorites').empty();
-        $('#startBtn').empty();
-        pexelCurated();
-    });
 
     //click listener will save current url to local storage
     let favorites = [];
@@ -282,8 +272,6 @@ $(document).ready(function () {
             localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
-
-
 
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
@@ -324,5 +312,13 @@ $(document).ready(function () {
             cardContEl.append(cardButtonEl);
 
         };
+    }
+
+    //clear all picture cards
+    function clearCards() {
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('.random').empty();
+        $('.favorites').empty();
     }
 });
