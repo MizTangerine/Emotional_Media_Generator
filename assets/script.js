@@ -129,7 +129,7 @@ $(document).ready(function () {
                 itemTitleEl.append(titleEl);
             };
 
-            gifLocalStorage()
+            saveToFavorites();
         });
 
     }
@@ -189,7 +189,7 @@ $(document).ready(function () {
                 itemTitleEl.append(titleEl);
 
             };
-            pexelLocalStorage()
+            saveToFavorites();
         })
     }
 
@@ -228,7 +228,7 @@ $(document).ready(function () {
 
             };
 
-            pexelLocalStorage()
+            saveToFavorites();
         })
     }
 
@@ -254,25 +254,13 @@ $(document).ready(function () {
         $('.giphy').empty();
     });
 
-    //click listener will save current image url to local storage
+    //click listener will save current url to local storage
     let favorites = [];
 
-    function pexelLocalStorage() {
+    function saveToFavorites() {
         $('.img-Btn').on('click', function (event) {
             newImageHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
             favorites.unshift(newImageHistory);
-            if (favorites.length > 10) {
-                favorites.pop();
-            };
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        });
-    }
-
-    //click listener will save current gif url local storage
-    function gifLocalStorage() {
-        $('.gif-btn').on('click', function (event) {
-            newGifHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
-            favorites.unshift(newGifHistory);
             if (favorites.length > 10) {
                 favorites.pop();
             };
