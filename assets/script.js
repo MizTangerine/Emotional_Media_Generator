@@ -5,10 +5,12 @@ $(document).ready(function () {
     const photoQuestion = $("#photo-question");
     const giphyQuestion = $("#giphy-question");
     const randomQuestion = $("#random-question");
+    const favoritesDisplay = $("#favorites-display");
 
     photoQuestion.hide();
     giphyQuestion.hide();
     randomQuestion.hide();
+    favoritesDisplay.hide();
 
     const emgHome = $("#emg-home");
     const heroText = $("#hero-text");
@@ -23,6 +25,7 @@ $(document).ready(function () {
         giphyQuestion.hide();
         randomQuestion.hide();
         photoQuestion.show();
+        favoritesDisplay.hide();
     });
 
     $("#nav-gif").on("click", function () {
@@ -30,6 +33,7 @@ $(document).ready(function () {
         giphyQuestion.show();
         randomQuestion.hide();
         photoQuestion.hide();
+        favoritesDisplay.hide();
     });
 
     $("#nav-random").on("click", function () {
@@ -37,6 +41,20 @@ $(document).ready(function () {
         giphyQuestion.hide();
         randomQuestion.show();
         photoQuestion.hide();
+        favoritesDisplay.hide();
+    });
+    
+    $("#nav-favorites").on("click", function () {
+        console.log('hit favorites');
+        heroText.hide();
+        giphyQuestion.hide();
+        randomQuestion.hide();
+        photoQuestion.hide();
+        favoritesDisplay.show();
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('#startBtn').empty();
+        displayFavorites();
     });
 
     emgHome.on("click", function () {
@@ -46,10 +64,6 @@ $(document).ready(function () {
         photoQuestion.hide();
     });
     //hide show ends here
-
-
-
-
 
     let limit = 10;
 
@@ -115,7 +129,7 @@ $(document).ready(function () {
                 itemTitleEl.append(titleEl);
             };
 
-            gifLocalStorage()
+            saveToFavorites();
         });
 
     }
@@ -175,7 +189,7 @@ $(document).ready(function () {
                 itemTitleEl.append(titleEl);
 
             };
-            pexelLocalStorage()
+            saveToFavorites();
         })
     }
 
@@ -218,7 +232,7 @@ $(document).ready(function () {
 
             };
 
-            pexelLocalStorage()
+            saveToFavorites();
         })
     }
 
@@ -244,12 +258,12 @@ $(document).ready(function () {
         $('#startBtn').empty();
     });
 
-    //click listener will save current image url to local storage
+    //click listener will save current url to local storage
     let favorites = [];
 
-    function pexelLocalStorage() {
+    function saveToFavorites() {
         $('.img-Btn').on('click', function (event) {
-            newImageHistory = { 'URL': event.target.attributes[1].value };
+            newImageHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
             favorites.unshift(newImageHistory);
             if (favorites.length > 10) {
                 favorites.pop();
@@ -257,6 +271,7 @@ $(document).ready(function () {
             localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
+
 
     //click listener will save current gif url local storage
     function gifLocalStorage() {
@@ -277,6 +292,7 @@ $(document).ready(function () {
         $('#startBtn').empty();
         displayFavorites();
     });
+
 
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
