@@ -43,9 +43,8 @@ $(document).ready(function () {
         photoQuestion.hide();
         favoritesDisplay.hide();
     });
-    
+
     $("#nav-favorites").on("click", function () {
-        console.log('hit favorites');
         heroText.hide();
         giphyQuestion.hide();
         randomQuestion.hide();
@@ -54,9 +53,10 @@ $(document).ready(function () {
         $('.pexels').empty();
         $('.giphy').empty();
         $('#startBtn').empty();
+        $('.random').empty();
         displayFavorites();
     });
-
+    
     emgHome.on("click", function () {
         heroText.show();
         giphyQuestion.hide();
@@ -64,24 +64,24 @@ $(document).ready(function () {
         photoQuestion.hide();
     });
     //hide show ends here
-
+    
     let limit = 10;
-
+    
     $(".navbar-burger").click(function () {
-
+        
         $(".navbar-burger").toggleClass("is-active");
         $(".navbar-menu").toggleClass("is-active");
-
+        
     });
-
+    
     //function that returns 10 random gifs based on user input of mood
-    function gifySearch(mood) {
+    function giphySearch(mood) {
         let apiKeyGiphy = 'sLjSEJizaotgTqWKmYtg8DxMVNSsjkqS';
         let offset = Math.floor(Math.random() * 2000);
-
+        
         //variable for URL to api request
         const queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + mood + '&limit=' + limit + '&offset=' + offset + '&api_key=' + apiKeyGiphy;
-
+        
         // ajax call with then promise
         $.ajax({
             url: queryURL,
@@ -118,7 +118,7 @@ $(document).ready(function () {
                     'href': response.data[i].embed_url,
                     'target': '_blank '
                 }).text(response.data[i].title + ' Powered By GIPHY');
-
+                
                 $('.giphy').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
@@ -128,18 +128,18 @@ $(document).ready(function () {
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
             };
-
+            
             saveToFavorites();
         });
-
+        
     }
     //function to return pexel images
     function pexelSearch(mood) {
-
+        
         let page = (Math.floor(Math.random() * 7)) + 1;
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
         const queryURLp = 'https://api.pexels.com/v1/search?client=' + api_key + '&query=' + mood + '&per_page=' + limit + '&page=' + page;
-
+        
         $.ajax({
             url: queryURLp,
             method: 'GET',
@@ -149,7 +149,7 @@ $(document).ready(function () {
         }).then(function (responseP) {
             // console.log(mood, responseP);
             for (let i = 0; i < limit; i++) {
-
+                
                 let cardEl = $('<div>').attr({
                     'class': 'card'
                 });
@@ -178,7 +178,7 @@ $(document).ready(function () {
                     'href': responseP.photos[i].photographer_url,
                     'target': '_blank '
                 }).text('Photo by ' + responseP.photos[i].photographer + ' on Pexels');
-
+                
                 $('.pexels').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
@@ -187,27 +187,27 @@ $(document).ready(function () {
                 cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
-
+                
             };
             saveToFavorites();
         })
     }
-
+    
     //function to return curated pexel images
     function pexelCurated() {
-
+        
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
         const queryURLp = 'https://api.pexels.com/v1/curated?client=' + api_key;
-
+        
         $.ajax({
             url: queryURLp,
             method: 'GET',
             headers: { "Authorization": api_key },
         }).then(function (responseC) {
             // console.log(responseC);
-
+            
             for (let i = 0; i < limit; i++) {
-
+                
                 let cardEl = $('<div>').attr({ 'class': 'card' });
                 let cardButtonEl = $('<button>').attr({
                     'class': 'img-Btn far fa-heart'
@@ -219,7 +219,7 @@ $(document).ready(function () {
                 let cardContEl = $('<div>').attr({ 'class': 'card-content' });
                 let itemTitleEl = $('<div>').attr({ 'class': 'item__title' });
                 let titleEl = $('<a>').attr({ 'href': responseC.photos[i].photographer_url, 'target': '_blank ' }).text('Photo by ' + responseC.photos[i].photographer + ' on Pexels');
-
+                
                 $('.random').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
@@ -229,40 +229,47 @@ $(document).ready(function () {
                 cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
-
+                
             };
-
+            
             saveToFavorites();
         })
     }
-
+    
     //on button click set mood to button value
     $('#photo-btn').on('click', function (event) {
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('.random').empty();
+        $('.favorites').empty();
+        $('#startBtn').empty();
         pexelSearch(event.target.dataset.name);
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('#startBtn').empty();
     });
-
+    
     $('#gif-btn').on('click', function (event) {
-        gifySearch(event.target.textContent);
         $('.pexels').empty();
         $('.giphy').empty();
+        $('.random').empty();
+        $('.favorites').empty();
         $('#startBtn').empty();
+        giphySearch(event.target.textContent);
     });
-
+    
     $('#random-btn').on('click', function () {
-        pexelCurated();
         $('.pexels').empty();
         $('.giphy').empty();
+        $('.random').empty();
+        $('.favorites').empty();
         $('#startBtn').empty();
+        pexelCurated();
     });
-
+    
     //click listener will save current url to local storage
     let favorites = [];
-
+    
     function saveToFavorites() {
         $('.img-Btn').on('click', function (event) {
+            console.dir(event.target);
             newImageHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
             favorites.unshift(newImageHistory);
             if (favorites.length > 10) {
@@ -271,47 +278,47 @@ $(document).ready(function () {
             localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
-
-
-    //click listener will save current gif url local storage
-    function gifLocalStorage() {
-        $('.gif-btn').on('click', function (event) {
-            newGifHistory = { 'URL': event.target.attributes[1].value };
-            favorites.unshift(newGifHistory);
-            if (favorites.length > 10) {
-                favorites.pop();
-            };
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        });
-    }
-
-    //display all favorites when start button is clicked
-    $('#startBtn').on('click', function () {
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('#startBtn').empty();
-        displayFavorites();
-    });
-
-
+    
+    
+    
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
+        console.log('hit favorites');
         console.log(favorites);
         favorites = JSON.parse(localStorage.getItem('favorites'));
         console.log(favorites);
+        
         for (let i = 0; i < favorites.length; i++) {
             console.log(favorites[i].URL);
-            let cardEl = $('<div>').attr({ 'class': 'card' });
-            let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
-            let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
-            let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
-            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i });
+            
+            let cardEl = $('<div>').attr({
+                'class': 'card'
+            });
+            let cardButtonEl = $('<button>').attr({
+                'class': 'img-Btn fas fa-heart'
+            });
+            let cardImgEl = $('<div>').attr({
+                'class': 'card-image'
+            });
+            let figureEl = $('<figure>').attr({
+                'class': 'image is-16by9 is-covered'
+            });
+            let imgEl = $('<img>').attr({
+                'id': 'img' + [i],
+                'src': favorites[i].URL,
+                'alt': 'favorite_image_' + [i]
+            });
+            let cardContEl = $('<div>').attr({
+                'class': 'card-content'
+            });
 
-            $('.pexels').append(cardEl);
+            $('.favorites').append(cardEl);
             cardEl.append(cardImgEl);
             cardImgEl.append(figureEl);
-            figureEl.append(btnEl);
-            btnEl.append(imgEl);
+            figureEl.append(imgEl);
+            cardEl.append(cardContEl);
+            cardContEl.append(cardButtonEl);
+
         };
     }
 });
