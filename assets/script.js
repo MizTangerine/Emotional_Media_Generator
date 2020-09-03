@@ -209,6 +209,9 @@ $(document).ready(function () {
             for (let i = 0; i < limit; i++) {
 
                 let cardEl = $('<div>').attr({ 'class': 'card' });
+                let cardButtonEl = $('<button>').attr({
+                    'class': 'img-Btn far fa-heart'
+                });
                 let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
                 let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
                 let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
@@ -223,6 +226,7 @@ $(document).ready(function () {
                 figureEl.append(btnEl);
                 btnEl.append(imgEl);
                 cardEl.append(cardContEl);
+                cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
 
@@ -234,7 +238,7 @@ $(document).ready(function () {
 
     //on button click set mood to button value
     $('#photo-btn').on('click', function (event) {
-        pexelSearch(event.target.textContent);
+        pexelSearch(event.target.dataset.name);
         $('.pexels').empty();
         $('.giphy').empty();
         $('#startBtn').empty();
@@ -248,10 +252,10 @@ $(document).ready(function () {
     });
 
     $('#random-btn').on('click', function () {
-        console.log('something')
         pexelCurated();
         $('.pexels').empty();
         $('.giphy').empty();
+        $('#startBtn').empty();
     });
 
     //click listener will save current url to local storage
@@ -268,6 +272,28 @@ $(document).ready(function () {
         });
     }
 
+
+    //click listener will save current gif url local storage
+    function gifLocalStorage() {
+        $('.gif-btn').on('click', function (event) {
+            newGifHistory = { 'URL': event.target.attributes[1].value };
+            favorites.unshift(newGifHistory);
+            if (favorites.length > 10) {
+                favorites.pop();
+            };
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        });
+    }
+
+    //display all favorites when start button is clicked
+    $('#startBtn').on('click', function () {
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('#startBtn').empty();
+        displayFavorites();
+    });
+
+
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
         console.log(favorites);
@@ -279,7 +305,7 @@ $(document).ready(function () {
             let cardImgEl = $('<div>').attr({ 'class': 'card-image' });
             let figureEl = $('<figure>').attr({ 'class': 'image is-16by9 is-covered' });
             let btnEl = $('<button>').attr({ 'class': 'img-Btn' });
-            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i});
+            let imgEl = $('<img>').attr({ 'id': 'img' + [i], 'src': favorites[i].URL, 'alt': 'favorite_image_' + i });
 
             $('.pexels').append(cardEl);
             cardEl.append(cardImgEl);
