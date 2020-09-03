@@ -17,11 +17,6 @@ $(document).ready(function () {
     const emgHome = $("#emg-home");
     const heroText = $("#hero-text");
 
-    // $("#start-btn").on("click", function () {
-    //     heroText.hide();
-    //     photoQuestion.show();
-    // });
-
     $("#nav-photos,#hero-photos-btn").on("click", function () {
         heroText.hide();
         giphyQuestion.hide();
@@ -266,7 +261,7 @@ $(document).ready(function () {
             localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     }
-    
+
     //remove saved image from favorites
     function removeFromFavorites() {
         $('.img-Btn').on('click', function (event) {
@@ -281,9 +276,13 @@ $(document).ready(function () {
     function displayFavorites() {
         favorites = JSON.parse(localStorage.getItem('favorites'));
 
-        if (favorites !== null) {
+        if (favorites === null || favorites.length === 0) {
+            $('#favoritesText').text('You have no saved images or gifs!');
+            
+        } else {
+            $('#favoritesText').text('Here is a list of your saved images and gifs!');
             for (let i = 0; i < favorites.length; i++) {
-
+                
                 let cardEl = $('<div>').attr({
                     'class': 'card'
                 });
@@ -304,17 +303,16 @@ $(document).ready(function () {
                 let cardContEl = $('<div>').attr({
                     'class': 'card-content'
                 });
-
+                
                 $('.favorites').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
                 figureEl.append(imgEl);
                 cardEl.append(cardContEl);
                 cardContEl.append(cardButtonEl);
-
+                
             };
-
-        }
+        };
 
         removeFromFavorites();
     }
