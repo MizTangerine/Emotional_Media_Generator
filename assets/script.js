@@ -292,44 +292,6 @@ $(document).ready(function () {
         favorites = JSON.parse(localStorage.getItem('favorites'));
         console.log(favorites);
 
-        for (let i = 0; i < favorites.length; i++) {
-            console.log(favorites[i].URL);
-
-            let cardEl = $('<div>').attr({
-                'class': 'card'
-            });
-            let cardButtonEl = $('<button>').attr({
-                'class': 'img-Btn fas fa-heart'
-            });
-            let cardImgEl = $('<div>').attr({
-                'class': 'card-image'
-            });
-            let figureEl = $('<figure>').attr({
-                'class': 'image is-16by9 is-covered'
-            });
-
-            let sourceEl = $('<a>').attr({
-                'href': favorites[i].URL,
-                'target': '_blank'
-            })
-
-            let imgEl = $('<img>').attr({
-                'id': 'img' + [i],
-                'src': favorites[i].URL,
-                'alt': 'favorite_image_' + [i]
-            });
-            let cardContEl = $('<div>').attr({
-                'class': 'card-content'
-            });
-
-            $('.favorites').append(cardEl);
-            cardEl.append(cardImgEl);
-            cardImgEl.append(figureEl);
-            figureEl.append(sourceEl);
-            sourceEl.append(imgEl);
-            cardEl.append(cardContEl);
-            cardContEl.append(cardButtonEl);
-
             if (favorites === null || favorites.length === 0) {
                 $('#favoritesText').text('You have no saved images or gifs!');
 
@@ -369,7 +331,6 @@ $(document).ready(function () {
             };
 
             removeFromFavorites();
-        }
     }
 
         //clear all picture cards
