@@ -6,7 +6,7 @@
 
 Link to live site: [EMG](https://clarissareeve.github.io/Emotional_Media_Generator/)
 <!-- add .png of landing page -->
-![Landing Page]()
+![Landing Page](assets\photos\LandingPage.png)
 
 ## User Story
 
