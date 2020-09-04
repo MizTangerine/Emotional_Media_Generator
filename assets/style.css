@@ -43,3 +43,15 @@ body {
 .footer {
   position: relative;
 }
+
+.hero-body {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0px;
+}
+
+.section {
+  padding-top: 0px;
+}
+
+
