@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    //scroll to top of page on refresh
+    $(this).scrollTop(0);
+
     // global variables
     let limit = 10;
     let favorites = [];
@@ -22,11 +25,6 @@ $(document).ready(function () {
 
     const emgHome = $("#emg-home");
     const heroText = $("#hero-text");
-
-    // $("#start-btn").on("click", function () {
-    //     heroText.hide();
-    //     photoQuestion.show();
-    // });
 
     $("#nav-photos,#hero-photos-btn").on("click", function () {
         heroText.hide();
@@ -56,7 +54,6 @@ $(document).ready(function () {
     });
 
     $("#nav-favorites").on("click", function () {
-        console.log('hit favorites');
         heroText.hide();
         giphyQuestion.hide();
         randomQuestion.hide();
@@ -67,7 +64,6 @@ $(document).ready(function () {
     });
 
     emgHome.on("click", function () {
-        console.log('hit home');
         heroText.show();
         giphyQuestion.hide();
         randomQuestion.hide();
@@ -79,19 +75,16 @@ $(document).ready(function () {
 
     //on button click set mood to button value
     $('#photo-btn').on('click', function (event) {
-        // console.log('hit photos');
         clearCards();
         pexelSearch(event.target.dataset.name);
     });
 
     $('#gif-btn').on('click', function (event) {
-        // console.log('hit gifs');
         clearCards();
         giphySearch(event.target.textContent);
     });
 
     $('#random-btn').on('click', function () {
-        // console.log('hit random');
         clearCards();
         pexelCurated();
     });
@@ -110,7 +103,6 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             //display each of the 10 images in a div
-            // console.log('giphy ', response)
             for (let i = 0; i < limit; i++) {
                 // $('#imgGif' + i).attr('src', response.data[i].images.downsized_medium.url);
                 let cardEl = $('<div>').attr({
@@ -169,7 +161,6 @@ $(document).ready(function () {
                 "Authorization": api_key
             },
         }).then(function (responseP) {
-            // console.log(mood, responseP);
             for (let i = 0; i < limit; i++) {
 
                 let cardEl = $('<div>').attr({
@@ -276,7 +267,7 @@ $(document).ready(function () {
     //click listener will save current url to local storage
     function saveToFavorites() {
         $('.img-Btn').on('click', function (event) {
-            console.dir(event.target);
+            $(event.target).attr({ 'class': 'img-Btn fa fa-heart' });
             newImageHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
             favorites.unshift(newImageHistory);
             if (favorites.length > 10) {
@@ -286,59 +277,67 @@ $(document).ready(function () {
         });
     }
 
+    //remove saved image from favorites
+    function removeFromFavorites() {
+        $('.img-Btn').on('click', function (event) {
+            let currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
+            favorites.splice(currentIndex, 1);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            $(event.target).attr({ 'class': 'img-Btn far fa-heart' });
+        });
+    }
+
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
-        console.log('hit favorites');
-        console.log(favorites);
         favorites = JSON.parse(localStorage.getItem('favorites'));
         console.log(favorites);
 
-        for (let i = 0; i < favorites.length; i++) {
-            console.log(favorites[i].URL);
+            if (favorites === null || favorites.length === 0) {
+                $('#favoritesText').text('You have no saved images or gifs!');
 
-            let cardEl = $('<div>').attr({
-                'class': 'card'
-            });
-            let cardButtonEl = $('<button>').attr({
-                'class': 'img-Btn fas fa-heart'
-            });
-            let cardImgEl = $('<div>').attr({
-                'class': 'card-image'
-            });
-            let figureEl = $('<figure>').attr({
-                'class': 'image is-16by9 is-covered'
-            });
+            } else {
+                $('#favoritesText').text('Here is a list of your saved images and gifs!');
+                for (let i = 0; i < favorites.length; i++) {
 
-            let sourceEl = $('<a>').attr({
-                'href': favorites[i].URL,
-                'target': '_blank'
-            })
+                    let cardEl = $('<div>').attr({
+                        'class': 'card'
+                    });
+                    let cardButtonEl = $('<button>').attr({
+                        'class': 'img-Btn fas fa-heart'
+                    });
+                    let cardImgEl = $('<div>').attr({
+                        'class': 'card-image'
+                    });
+                    let figureEl = $('<figure>').attr({
+                        'class': 'image is-16by9 is-covered'
+                    });
+                    let imgEl = $('<img>').attr({
+                        'id': 'img' + [i],
+                        'src': favorites[i].URL,
+                        'alt': 'favorite_image_' + [i]
+                    });
+                    let cardContEl = $('<div>').attr({
+                        'class': 'card-content'
+                    });
 
-            let imgEl = $('<img>').attr({
-                'id': 'img' + [i],
-                'src': favorites[i].URL,
-                'alt': 'favorite_image_' + [i]
-            });
-            let cardContEl = $('<div>').attr({
-                'class': 'card-content'
-            });
+                    $('.favorites').append(cardEl);
+                    cardEl.append(cardImgEl);
+                    cardImgEl.append(figureEl);
+                    figureEl.append(imgEl);
+                    cardEl.append(cardContEl);
+                    cardContEl.append(cardButtonEl);
 
-            $('.favorites').append(cardEl);
-            cardEl.append(cardImgEl);
-            cardImgEl.append(figureEl);
-            figureEl.append(sourceEl);
-            sourceEl.append(imgEl);
-            cardEl.append(cardContEl);
-            cardContEl.append(cardButtonEl);
+                };
+            };
 
-        };
+            removeFromFavorites();
     }
 
-    //clear all picture cards
-    function clearCards() {
-        $('.pexels').empty();
-        $('.giphy').empty();
-        $('.random').empty();
-        $('.favorites').empty();
-    }
-});
+        //clear all picture cards
+        function clearCards() {
+            $('.pexels').empty();
+            $('.giphy').empty();
+            $('.random').empty();
+            $('.favorites').empty();
+        }
+    });
