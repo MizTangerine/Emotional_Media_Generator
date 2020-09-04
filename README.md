@@ -5,8 +5,8 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/clarissareeve/Emotional_Media_Generator)
 
 Link to live site: [EMG](https://clarissareeve.github.io/Emotional_Media_Generator/)
-<!-- add .png of landing page -->
-![Landing Page](assets\photos\LandingPage.png)
+
+![Landing Page](./assets/photos/LandingPage.png)
 
 ## User Story
 
@@ -54,6 +54,6 @@ Developed with:
 
 ## Credits
 
-This app was created by [Jake Burzlaff](https://github.com/jburz), [Clarissa Reeve](https://github.com/clarissareeve), [Sean Mena](https://github.com/seanmena) and [Kilee Lucero](https://github.com/kileelucero)
+This app was created by [Jake Burzlaff](https://github.com/jburz), [Clarissa](https://github.com/clarissareeve), [Sean Mena](https://github.com/seanmena) and [Kilee Lucero](https://github.com/kileelucero)
 
 Logo by [Sean Mena](https://github.com/seanmena)
