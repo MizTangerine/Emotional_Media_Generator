@@ -104,7 +104,7 @@ $(document).ready(function () {
         }).then(function (response) {
             //display each of the 10 images in a div
             for (let i = 0; i < limit; i++) {
-                // $('#imgGif' + i).attr('src', response.data[i].images.downsized_medium.url);
+
                 let cardEl = $('<div>').attr({
                     'class': 'card'
                 });
@@ -200,7 +200,6 @@ $(document).ready(function () {
                 cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
-
             };
             saveToFavorites();
         })
@@ -209,7 +208,6 @@ $(document).ready(function () {
     //function to return curated pexel images
     function pexelCurated() {
         let page = (Math.floor(Math.random() * 25)) + 1;
-
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
         const queryURLp = 'https://api.pexels.com/v1/curated?per_page=' + limit + '&page=' + page;
 
@@ -256,13 +254,11 @@ $(document).ready(function () {
                 cardContEl.append(cardButtonEl);
                 cardContEl.append(itemTitleEl);
                 itemTitleEl.append(titleEl);
-
             };
 
             saveToFavorites();
         })
     }
-
 
     //click listener will save current url to local storage
     function saveToFavorites() {
@@ -333,7 +329,6 @@ $(document).ready(function () {
                 sourceEl.append(imgEl);
                 cardEl.append(cardContEl);
                 cardContEl.append(cardButtonEl);
-
             };
         };
 
