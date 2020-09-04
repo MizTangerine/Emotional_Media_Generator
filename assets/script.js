@@ -133,7 +133,7 @@ $(document).ready(function () {
                     'target': '_blank '
                 }).text(response.data[i].title + ' Powered By GIPHY');
 
-                $('.giphy').append(cardEl);
+                $('#slider').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
                 figureEl.append(imgEl);
@@ -192,7 +192,7 @@ $(document).ready(function () {
                     'target': '_blank '
                 }).text('Photo by ' + responseP.photos[i].photographer + ' on Pexels');
 
-                $('.pexels').append(cardEl);
+                $('#slider').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
                 figureEl.append(imgEl);
@@ -248,7 +248,7 @@ $(document).ready(function () {
                 })
                     .text('Photo by ' + responseC.photos[i].photographer + ' on Pexels');
 
-                $('.random').append(cardEl);
+                $('#slider').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
                 figureEl.append(imgEl);
@@ -326,7 +326,7 @@ $(document).ready(function () {
                     'class': 'card-content'
                 });
 
-                $('.favorites').append(cardEl);
+                $('#slider').append(cardEl);
                 cardEl.append(cardImgEl);
                 cardImgEl.append(figureEl);
                 figureEl.append(sourceEl);
@@ -342,7 +342,7 @@ $(document).ready(function () {
 
     //clear all picture cards
     function clearCards() {
-        $('.pexels').empty();
+        $('#slider').empty();
         $('.giphy').empty();
         $('.random').empty();
         $('.favorites').empty();
