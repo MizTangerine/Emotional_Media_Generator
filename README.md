@@ -5,7 +5,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/clarissareeve/Emotional_Media_Generator)
 
 Link to live site: [EMG](https://clarissareeve.github.io/Emotional_Media_Generator/)
-<!-- add png of landing page -->
+<!-- add .png of landing page -->
 ![Landing Page]()
 
 ## User Story
@@ -39,20 +39,18 @@ WHEN I click on the Heart Icon the image is removed from FAVORITES.
 ## Development Tools
 
 Developed with:
+
 * [Bulma](https://bulma.io/)
 * [jQuery](https://jquery.com/)
 * [Font Awesome](https://fontawesome.com/)
 
-* [Giphy]
-* [Pexels]
-
-
+* [Giphy](https://developers.giphy.com/docs/api#quick-start-guide)
+* [Pexels](https://www.pexels.com/api/documentation/)
 
 ## Features
 
 * Local Storage
 * AJAX
-
 
 ## Credits
 
