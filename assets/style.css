@@ -39,3 +39,7 @@ body {
   float: right;
   size: 10px;
 }
+
+.footer {
+  position: relative;
+}
