@@ -296,7 +296,7 @@ $(document).ready(function () {
             $('#favoritesText').text('You have no saved images or gifs!');
 
         } else {
-            $('#favoritesText').text('Here is a list of your saved images and gifs!');
+            $("#favoritesNotification").empty();
             for (let i = 0; i < favorites.length; i++) {
 
                 let cardEl = $('<div>').attr({
