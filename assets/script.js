@@ -292,52 +292,59 @@ $(document).ready(function () {
         favorites = JSON.parse(localStorage.getItem('favorites'));
         console.log(favorites);
 
-            if (favorites === null || favorites.length === 0) {
-                $('#favoritesText').text('You have no saved images or gifs!');
+        if (favorites === null || favorites.length === 0) {
+            $('#favoritesText').text('You have no saved images or gifs!');
 
-            } else {
-                $('#favoritesText').text('Here is a list of your saved images and gifs!');
-                for (let i = 0; i < favorites.length; i++) {
+        } else {
+            $('#favoritesText').text('Here is a list of your saved images and gifs!');
+            for (let i = 0; i < favorites.length; i++) {
 
-                    let cardEl = $('<div>').attr({
-                        'class': 'card'
-                    });
-                    let cardButtonEl = $('<button>').attr({
-                        'class': 'img-Btn fas fa-heart'
-                    });
-                    let cardImgEl = $('<div>').attr({
-                        'class': 'card-image'
-                    });
-                    let figureEl = $('<figure>').attr({
-                        'class': 'image is-16by9 is-covered'
-                    });
-                    let imgEl = $('<img>').attr({
-                        'id': 'img' + [i],
-                        'src': favorites[i].URL,
-                        'alt': 'favorite_image_' + [i]
-                    });
-                    let cardContEl = $('<div>').attr({
-                        'class': 'card-content'
-                    });
+                let cardEl = $('<div>').attr({
+                    'class': 'card'
+                });
+                let cardButtonEl = $('<button>').attr({
+                    'class': 'img-Btn fas fa-heart'
+                });
+                let cardImgEl = $('<div>').attr({
+                    'class': 'card-image'
+                });
+                let figureEl = $('<figure>').attr({
+                    'class': 'image is-16by9 is-covered'
+                });
 
-                    $('.favorites').append(cardEl);
-                    cardEl.append(cardImgEl);
-                    cardImgEl.append(figureEl);
-                    figureEl.append(imgEl);
-                    cardEl.append(cardContEl);
-                    cardContEl.append(cardButtonEl);
+                let sourceEl = $('<a>').attr({
+                    'href': favorites[i].URL,
+                    'target': '_blank'
+                })
 
-                };
+                let imgEl = $('<img>').attr({
+                    'id': 'img' + [i],
+                    'src': favorites[i].URL,
+                    'alt': 'favorite_image_' + [i]
+                });
+                let cardContEl = $('<div>').attr({
+                    'class': 'card-content'
+                });
+
+                $('.favorites').append(cardEl);
+                cardEl.append(cardImgEl);
+                cardImgEl.append(figureEl);
+                figureEl.append(sourceEl);
+                sourceEl.append(imgEl);
+                cardEl.append(cardContEl);
+                cardContEl.append(cardButtonEl);
+
             };
+        };
 
-            removeFromFavorites();
+        removeFromFavorites();
     }
 
-        //clear all picture cards
-        function clearCards() {
-            $('.pexels').empty();
-            $('.giphy').empty();
-            $('.random').empty();
-            $('.favorites').empty();
-        }
-    });
+    //clear all picture cards
+    function clearCards() {
+        $('.pexels').empty();
+        $('.giphy').empty();
+        $('.random').empty();
+        $('.favorites').empty();
+    }
+});
