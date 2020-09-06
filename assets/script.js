@@ -154,6 +154,7 @@ $(document).ready(function () {
             headers: { "Authorization": api_key },
         }).then(function (response) {
 
+            //store necessary details of each image to an array
             for (let i = 0; i < limit; i++) {
 
                 mediaDetailsArray.push(new mediaDetails('Random', response.photos[i].src.medium, response.photos[i].photographer, response.photos[i].photographer_url, response.photos[i].photographer, 'Pexels'));
@@ -170,6 +171,8 @@ $(document).ready(function () {
             $(event.target).attr({ 'class': 'img-Btn fa fa-heart' });
             const currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
             favorites.unshift(mediaDetailsArray[currentIndex]);
+
+            //only store 10 images/gifs - remove oldest if greater than 10
             if (favorites.length > 10) {
                 favorites.pop();
             };
@@ -177,7 +180,7 @@ $(document).ready(function () {
         });
     }
 
-    //remove selected media from favorites
+    //remove selected media from favorites and store in local storage
     function removeFromFavorites() {
         $('.img-Btn').on('click', function (event) {
             const currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
@@ -192,8 +195,6 @@ $(document).ready(function () {
         favorites = JSON.parse(localStorage.getItem('favorites'));
 
         if (favorites === null || favorites.length === 0) {
-            // $('#favoritesText').text('You have no saved images or gifs!');
-            console.log('hit');
 
             //since we empty #favovitesNotification if favorites array is empty, we need to create the divs for this display each time instead of hardcoding the html
             let noFavoritesEl = $('<div>').attr('class', 'notification is-light');
@@ -214,7 +215,7 @@ $(document).ready(function () {
         removeFromFavorites();
     }
 
-    //clear all picture cards
+    //clear all picture card divs
     function clearCards() {
         $('#slider').empty();
         $('.giphy').empty();
@@ -222,7 +223,7 @@ $(document).ready(function () {
         $('.favorites').empty();
     }
 
-    //constructor function to store media details
+    //constructor function to store media details for each generated image/gif
     function mediaDetails(mood, src, alt, href, title, api) {
         this.mood = mood;
         this.src = src;
@@ -234,7 +235,6 @@ $(document).ready(function () {
 
     //display image/gif cards based on the navBar link selected
     function displayCards(displayFrom, currentArray) {
-        console.log(displayFrom);
 
         for (let i = 0; i < currentArray.length; i++) {
 
