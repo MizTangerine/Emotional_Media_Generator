@@ -5,6 +5,7 @@ $(document).ready(function () {
     // global variables
     let limit = 10;
     let favorites = [];
+    let mediaDetailsArray = [];
 
     // collapsable burger when website is mobile
     $(".navbar-burger").click(function () {
@@ -91,6 +92,8 @@ $(document).ready(function () {
 
     //function that returns 10 random gifs based on user input of mood
     function giphySearch(mood) {
+        mediaDetailsArray.length = 0;
+
         let apiKeyGiphy = 'sLjSEJizaotgTqWKmYtg8DxMVNSsjkqS';
         let offset = Math.floor(Math.random() * 2000);
 
@@ -105,50 +108,16 @@ $(document).ready(function () {
             //display each of the 10 images in a div
             for (let i = 0; i < limit; i++) {
 
-                let cardEl = $('<div>').attr({
-                    'class': 'card'
-                });
-                let cardButtonEl = $('<button>').attr({
-                    'class': 'img-Btn far fa-heart',
-                });
-                let cardImgEl = $('<div>').attr({
-                    'class': 'card-image'
-                });
-                let figureEl = $('<figure>').attr({
-                    'class': 'image is-16by9 is-covered'
-                });
-                let imgEl = $('<img>').attr({
-                    'id': 'img' + [i],
-                    'src': response.data[i].images.downsized_medium.url,
-                    'alt': response.data[i].title
-                });
-                let cardContEl = $('<div>').attr({
-                    'class': 'card-content'
-                });
-                let itemTitleEl = $('<div>').attr({
-                    'class': 'item__title'
-                });
-                let titleEl = $('<a>').attr({
-                    'href': response.data[i].embed_url,
-                    'target': '_blank '
-                }).text(response.data[i].title + ' Powered By GIPHY');
-
-                $('#slider').append(cardEl);
-                cardEl.append(cardImgEl);
-                cardImgEl.append(figureEl);
-                figureEl.append(imgEl);
-                cardEl.append(cardContEl);
-                cardContEl.append(cardButtonEl);
-                cardContEl.append(itemTitleEl);
-                itemTitleEl.append(titleEl);
+                mediaDetailsArray.push(new mediaDetails(mood, response.data[i].images.downsized_medium.url, response.data[i].title, response.data[i].embed_url, response.data[i].title, 'Giphy'));
             };
-
+            displayCards('giphy', mediaDetailsArray);
             saveToFavorites();
         });
 
     }
     //function to return pexel images
     function pexelSearch(mood) {
+        mediaDetailsArray.length = 0;
 
         let page = (Math.floor(Math.random() * 15)) + 1;
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
@@ -160,53 +129,21 @@ $(document).ready(function () {
             headers: {
                 "Authorization": api_key
             },
-        }).then(function (responseP) {
+        }).then(function (response) {
             for (let i = 0; i < limit; i++) {
 
-                let cardEl = $('<div>').attr({
-                    'class': 'card'
-                });
-                let cardButtonEl = $('<button>').attr({
-                    'class': 'img-Btn far fa-heart'
-                });
-                let cardImgEl = $('<div>').attr({
-                    'class': 'card-image'
-                });
-                let figureEl = $('<figure>').attr({
-                    'class': 'image is-16by9 is-covered'
-                });
-                let imgEl = $('<img>').attr({
-                    'id': 'img' + [i],
-                    'src': responseP.photos[i].src.medium,
-                    'alt': mood + [i],
-                    'label': 'Photo by ' + responseP.photos[i].photographer + ' on Pexels'
-                });
-                let cardContEl = $('<div>').attr({
-                    'class': 'card-content'
-                });
-                let itemTitleEl = $('<div>').attr({
-                    'class': 'item__title'
-                });
-                let titleEl = $('<a>').attr({
-                    'href': responseP.photos[i].photographer_url,
-                    'target': '_blank '
-                }).text('Photo by ' + responseP.photos[i].photographer + ' on Pexels');
+                mediaDetailsArray.push(new mediaDetails(mood, response.photos[i].src.medium, response.photos[i].photographer, response.photos[i].photographer_url, response.photos[i].photographer, 'Pexels'));
 
-                $('#slider').append(cardEl);
-                cardEl.append(cardImgEl);
-                cardImgEl.append(figureEl);
-                figureEl.append(imgEl);
-                cardEl.append(cardContEl);
-                cardContEl.append(cardButtonEl);
-                cardContEl.append(itemTitleEl);
-                itemTitleEl.append(titleEl);
             };
+            displayCards('pexels', mediaDetailsArray);
             saveToFavorites();
         })
     }
 
     //function to return curated pexel images
     function pexelCurated() {
+        mediaDetailsArray.length = 0;
+
         let page = (Math.floor(Math.random() * 25)) + 1;
         const api_key = "563492ad6f9170000100000158308df764de4d088c4400082b559ea4";
         const queryURLp = 'https://api.pexels.com/v1/curated?per_page=' + limit + '&page=' + page;
@@ -215,57 +152,27 @@ $(document).ready(function () {
             url: queryURLp,
             method: 'GET',
             headers: { "Authorization": api_key },
-        }).then(function (responseC) {
-            console.log(responseC);
+        }).then(function (response) {
 
+            //store necessary details of each image to an array
             for (let i = 0; i < limit; i++) {
 
-                let cardEl = $('<div>').attr({
-                    'class': 'card'
-                });
-                let cardButtonEl = $('<button>').attr({
-                    'class': 'img-Btn far fa-heart'
-                });
-                let cardImgEl = $('<div>').attr({
-                    'class': 'card-image'
-                });
-                let figureEl = $('<figure>').attr({
-                    'class': 'image is-16by9 is-covered'
-                });
-                let imgEl = $('<img>').attr({
-                    'id': 'img' + [i], 'src': responseC.photos[i].src.medium, 'alt': 'Photo by ' + responseC.photos[i].photographer, 'label': 'Photo by ' + responseC.photos[i].photographer + ' on Pexels'
-                });
-                let cardContEl = $('<div>').attr({
-                    'class': 'card-content'
-                });
-                let itemTitleEl = $('<div>').attr({
-                    'class': 'item__title'
-                });
-                let titleEl = $('<a>').attr({
-                    'href': responseC.photos[i].photographer_url, 'target': '_blank '
-                })
-                    .text('Photo by ' + responseC.photos[i].photographer + ' on Pexels');
+                mediaDetailsArray.push(new mediaDetails('Random', response.photos[i].src.medium, response.photos[i].photographer, response.photos[i].photographer_url, response.photos[i].photographer, 'Pexels'));
 
-                $('#slider').append(cardEl);
-                cardEl.append(cardImgEl);
-                cardImgEl.append(figureEl);
-                figureEl.append(imgEl);
-                cardEl.append(cardContEl);
-                cardContEl.append(cardButtonEl);
-                cardContEl.append(itemTitleEl);
-                itemTitleEl.append(titleEl);
             };
-
+            displayCards('random', mediaDetailsArray);
             saveToFavorites();
         })
     }
 
-    //click listener will save current url to local storage
+    //click listener will save media details object url to local storage
     function saveToFavorites() {
         $('.img-Btn').on('click', function (event) {
             $(event.target).attr({ 'class': 'img-Btn fa fa-heart' });
-            newImageHistory = { 'URL': event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[1].value };
-            favorites.unshift(newImageHistory);
+            const currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
+            favorites.unshift(mediaDetailsArray[currentIndex]);
+
+            //only store 10 images/gifs - remove oldest if greater than 10
             if (favorites.length > 10) {
                 favorites.pop();
             };
@@ -273,10 +180,10 @@ $(document).ready(function () {
         });
     }
 
-    //remove saved image from favorites
+    //remove selected media from favorites and store in local storage
     function removeFromFavorites() {
         $('.img-Btn').on('click', function (event) {
-            let currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
+            const currentIndex = event.target.parentElement.parentElement.firstChild.firstChild.firstChild.attributes[0].value.charAt(3);
             favorites.splice(currentIndex, 1);
             localStorage.setItem('favorites', JSON.stringify(favorites));
             $(event.target).attr({ 'class': 'img-Btn far fa-heart' });
@@ -286,60 +193,101 @@ $(document).ready(function () {
     //create new cards and display image for each url in favorites function
     function displayFavorites() {
         favorites = JSON.parse(localStorage.getItem('favorites'));
-        console.log(favorites);
 
         if (favorites === null || favorites.length === 0) {
-            $('#favoritesText').text('You have no saved images or gifs!');
+
+            //since we empty #favovitesNotification if favorites array is empty, we need to create the divs for this display each time instead of hardcoding the html
+            let noFavoritesEl = $('<div>').attr('class', 'notification is-light');
+            let noFavoritesText = $('<div>').attr({
+                'class': 'content is-large is is-centered',
+                'id': 'favoritesText'
+            });
+
+            noFavoritesText.text('You have no saved images or gifs!');
+
+            $('#favoritesNotification').append(noFavoritesEl);
+            noFavoritesEl.append(noFavoritesText);
 
         } else {
             $("#favoritesNotification").empty();
-            for (let i = 0; i < favorites.length; i++) {
-
-                let cardEl = $('<div>').attr({
-                    'class': 'card'
-                });
-                let cardButtonEl = $('<button>').attr({
-                    'class': 'img-Btn fas fa-heart'
-                });
-                let cardImgEl = $('<div>').attr({
-                    'class': 'card-image'
-                });
-                let figureEl = $('<figure>').attr({
-                    'class': 'image is-16by9 is-covered'
-                });
-
-                let sourceEl = $('<a>').attr({
-                    'href': favorites[i].URL,
-                    'target': '_blank'
-                })
-
-                let imgEl = $('<img>').attr({
-                    'id': 'img' + [i],
-                    'src': favorites[i].URL,
-                    'alt': 'favorite_image_' + [i]
-                });
-                let cardContEl = $('<div>').attr({
-                    'class': 'card-content'
-                });
-
-                $('#slider').append(cardEl);
-                cardEl.append(cardImgEl);
-                cardImgEl.append(figureEl);
-                figureEl.append(sourceEl);
-                sourceEl.append(imgEl);
-                cardEl.append(cardContEl);
-                cardContEl.append(cardButtonEl);
-            };
+            displayCards('favorites', favorites);
         };
-
         removeFromFavorites();
     }
 
-    //clear all picture cards
+    //clear all picture card divs
     function clearCards() {
         $('#slider').empty();
         $('.giphy').empty();
         $('.random').empty();
         $('.favorites').empty();
+    }
+
+    //constructor function to store media details for each generated image/gif
+    function mediaDetails(mood, src, alt, href, title, api) {
+        this.mood = mood;
+        this.src = src;
+        this.alt = alt;
+        this.href = href;
+        this.title = title;
+        this.api = api;
+    }
+
+    //display image/gif cards based on the navBar link selected
+    function displayCards(displayFrom, currentArray) {
+
+        for (let i = 0; i < currentArray.length; i++) {
+
+            let cardEl = $('<div>').attr({
+                'class': 'card'
+            });
+            let cardImgEl = $('<div>').attr({
+                'class': 'card-image'
+            });
+            let figureEl = $('<figure>').attr({
+                'class': 'image is-16by9 is-covered'
+            });
+            let imgEl = $('<img>').attr({
+                'id': 'img' + [i],
+                'src': currentArray[i].src,
+                'alt': currentArray[i].alt
+            });
+            let cardContEl = $('<div>').attr({
+                'class': 'card-content'
+            });
+
+            let cardButtonEl;
+            if (displayFrom === 'favorites') {
+                cardButtonEl = $('<button>').attr({
+                    'class': 'img-Btn fas fa-heart'
+                });
+            } else {
+                cardButtonEl = $('<button>').attr({
+                    'class': 'img-Btn far fa-heart'
+                });
+            }
+            let itemTitleEl = $('<div>').attr({
+                'class': 'item__title'
+            });
+            let titleEl = $('<a>').attr({
+                'href': currentArray[i].href,
+                'target': '_blank '
+            });
+
+            if (currentArray[i].api === 'Pexels') {
+                titleEl.text('Photo by ' + currentArray[i].title + ' on Pexels');
+            } else if (currentArray[i].api === 'Giphy') {
+                titleEl.text(currentArray[i].title + ' Powered By GIPHY');
+            };
+
+            $('#slider').append(cardEl);
+            cardEl.append(cardImgEl);
+            cardImgEl.append(figureEl);
+            figureEl.append(imgEl);
+            cardEl.append(cardContEl);
+            cardContEl.append(cardButtonEl);
+            cardContEl.append(itemTitleEl);
+            itemTitleEl.append(titleEl);
+        };
     }
 });
